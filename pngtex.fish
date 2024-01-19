@@ -59,13 +59,13 @@ function pngtex -d "turns latex into png"
         end
     end
 
-    function main --argument output_cmd save_dir replace
+    function main --argument output_cmd save_dir replace cwd
         echo "
-    \\documentclass[border={10pt 10pt 10pt 10pt}]{standalone}
-    \\usepackage{hyde}
-    \\begin{document}
-        \$$argv[4..]\$
-    \\end{document}
+        \\documentclass[border={10pt 10pt 10pt 10pt}]{standalone}
+        \\usepackage{hyde}
+        \\begin{document}
+        \$$argv[5..]\$
+        \\end{document}
         " > tmp.tex
         or return $status
 
@@ -91,13 +91,13 @@ function pngtex -d "turns latex into png"
 
         set -l cmd (make_cmd $output $output_cmd $replace)
 
-        command $SHELL -c "$cmd"
+        command $SHELL -c "cd '$cwd'; $cmd"
         or return $status
     end
 
 
     cd "$tmpdir"
-    main "$output_cmd" "$save_dir" "$replace" $argv
+    main "$output_cmd" "$save_dir" "$replace" "$olddir" $argv
     set st $status
     cd "$olddir"
     command rm -r "$tmpdir"
