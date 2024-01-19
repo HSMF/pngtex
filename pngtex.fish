@@ -78,7 +78,7 @@ function pngtex -d "turns latex into png"
             return $st
         end
 
-        convert -density 300 tmp.pdf -quality 90 -background white -alpha remove -alpha off output.png
+        convert -density 300 tmp.pdf -quality 90 -colorspace RGB -background white -alpha remove -alpha off output.png
         or return $status
 
 
