@@ -3,6 +3,10 @@ function pngtex -d "turns latex into png"
     set olddir (pwd)
     set output_cmd "kitty +kitten icat"
 
+    if not set -q KITTY_WINDOW_ID
+        set output_cmd "printf 'set command with --cmd\nset `--cmd true` to suppress this message\n' # "
+    end
+
     function help_msg
         echo "usage: pngtex [-hc] -- <latex formula>"
         echo ""
